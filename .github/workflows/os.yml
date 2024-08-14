@@ -49,6 +49,8 @@ jobs:
           echo "SUFFIX=$SUFFIX" >> config.mk
           echo "OLED=$OLED" >> config.mk
           echo "FAN=$FAN" >> config.mk
+          echo "firmware name:" ${{ PLATFORM }}-${{ BOARD }}-latest.img.xz
+          echo "firmware path:" /home/runner/work/pikvm-os/pikvm-os/.pi-builder/${{ PLATFORM }}-${{ BOARD }}
 
       - name: Building OS
         run: make os NC=1
@@ -56,5 +58,9 @@ jobs:
       - name: Making image
         run: make image IMAGE_XZ=1
 
-      - name: Uploading image
-        run: make upload
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: steps.organize.outputs.status == 'success' && !cancelled()
+        with:
+          name: ${{ PLATFORM }}-${{ BOARD }}-latest.img.xz
+          path: /home/runner/work/pikvm-os/pikvm-os/.pi-builder/${{ PLATFORM }}-${{ BOARD }}	
