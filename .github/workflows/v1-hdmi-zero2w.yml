@@ -8,3 +8,5 @@ jobs:
     with:
       BOARD: zero2w
       PLATFORM: v1-hdmi
+    secrets:
+      DEPLOY_KEY: "${{secrets.DEPLOY_KEY}}"
