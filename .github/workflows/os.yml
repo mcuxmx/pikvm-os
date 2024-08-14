@@ -50,11 +50,14 @@ jobs:
           echo "OLED=$OLED" >> config.mk
           echo "FAN=$FAN" >> config.mk
           echo "FILE_DATE=$(date +"%Y%m%d")" >> $GITHUB_ENV
-          echo "firmware name:" ${{inputs.PLATFORM}}-${{inputs.BOARD}}-${{env.FILE_DATE}}.img.xz
+          echo "firmware name:" ${{inputs.PLATFORM}}-${{inputs.BOARD}}-${{ env.FILE_DATE }}.img.xz
           echo "firmware path:" /home/runner/work/pikvm-os/pikvm-os/.pi-builder/${{inputs.PLATFORM}}-${{inputs.BOARD}}
 
       - name: Building OS
-        run: make os NC=1
+        run: |
+        echo "firmware name:" ${{inputs.PLATFORM}}-${{inputs.BOARD}}-${{ env.FILE_DATE }}.img.xz
+        echo "firmware path:" /home/runner/work/pikvm-os/pikvm-os/.pi-builder/${{inputs.PLATFORM}}-${{inputs.BOARD}}
+        make os NC=1
 
       - name: Making image
         run: make image IMAGE_XZ=1
@@ -62,5 +65,5 @@ jobs:
       - name: Upload firmware directory
         uses: actions/upload-artifact@main
         with:
-          name: ${{inputs.PLATFORM}}-${{inputs.BOARD}}-${{env.FILE_DATE}}.img.xz
+          name: ${{inputs.PLATFORM}}-${{inputs.BOARD}}-${{ env.FILE_DATE }}.img.xz
           path: /home/runner/work/pikvm-os/pikvm-os/images
