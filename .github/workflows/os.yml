@@ -40,14 +40,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Configuring SSH
-        run: |
-          test -n "$DEPLOY_KEY"
-          mkdir ~/.ssh
-          chmod 700 ~/.ssh
-          ssh-keyscan -H files.pikvm.org > ~/.ssh/known_hosts
-          echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
 
       - name: Creating config.mk
         run: |
