@@ -60,7 +60,7 @@ jobs:
         run: make image IMAGE_XZ=1
 
       - name: Upload firmware directory
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@test
         with:
           name: ${{inputs.PLATFORM}}-${{inputs.BOARD}}-latest.img.xz
           path: /home/runner/work/pikvm-os/pikvm-os/.pi-builder/${{inputs.PLATFORM}}-${{inputs.BOARD}}
